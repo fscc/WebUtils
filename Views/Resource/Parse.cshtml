@@ -1,0 +1,53 @@
+﻿@model Models.LanguageResourcesList[]
+
+@{
+    ViewBag.Title = "Parse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Parse</h2>
+
+<div class="btn-group">
+    @Html.ActionLink("Back to upload", "Index", "Resource", null, new { @class = "btn btn-xs btn-default" })
+    @Html.ActionLink("Export to CSV", "Export", "Resource", null, new { @class = "btn btn-xs btn-default" })
+</div>
+<br />
+
+<table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+        <tr>
+            <th>KEY</th>
+            @foreach (var rl in Model)
+            {
+                <th>@rl.CultureName.ToUpper()</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model[0].Resources)
+        {
+            <tr>
+                <td>@r.Key</td>
+                <td>@r.Value</td>
+                @for (int i = 1; i < Model.Length; i++)
+                {
+                    var translated = Model[i].Resources.FirstOrDefault(x => x.Key == r.Key);
+                    if (translated == null)
+                    {
+                        <td class="warning">-</td>
+                    }
+                    else
+                    {
+                        <td>@translated.Value</td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<div class="btn-group">
+    @Html.ActionLink("Back to upload", "Index", "Resource", null, new { @class = "btn btn-xs btn-default" })
+    @Html.ActionLink("Export to CSV", "Export", "Resource", null, new { @class = "btn btn-xs btn-default" })
+</div>
+

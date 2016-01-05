@@ -1,0 +1,19 @@
+﻿@model WebUtils.Web.Models.PostedFileModel
+
+@{
+    ViewBag.Title = "CountUniqueLogs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CountUniqueLogs</h2>
+
+@using (Html.BeginForm("CountUniqueLogs", "SmallUtils", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <p>Choose logs file</p>
+
+    <input type="file" name="@Html.NameFor(x => Model.Filename)" /><br />
+
+    <button class="btn btn-sm btn-primary">Upload</button>
+
+}

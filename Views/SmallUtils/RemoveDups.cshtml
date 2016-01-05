@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "RemoveDups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>RemoveDups</h2>
+
+@using (Html.BeginForm())
+{
+    <p>Data</p>
+    <p>
+        @Html.TextArea("Text", new { cols = 100, rows = 30 })
+    </p>
+    <p><button class="btn btn-default btn-sm">Sumbit</button></p>
+
+}
+

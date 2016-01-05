@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "BllDal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BllDal</h2>
+
+@Html.Label("Name", "BLL/DAL name")
+@Html.TextBox("Name")
+<button id="BtnCreate" class="btn btn-sm btn-primary">Create</button>
+
+<div class="row">
+    <div class="col-md-4 text-left">
+        <textarea id="FactoryOutput" readonly="readonly">
+
+        </textarea>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/Scripts/mustache.js"></script>
+    <script type="text/javascript">
+
+        var gFactoryTemplate = null;
+
+        $(function () {
+            
+            gFactoryTemplate = $("#FactoryTemplate").html();
+            Mustache.parse(gFactoryTemplate);
+
+            $("#BtnCreate").click(function (e) {
+                e.preventDefault();
+                createFactoryTemplate();
+            });
+
+        });
+
+        function createFactoryTemplate() {
+            var name = $("#Name").val();
+            if (name.length < 3) {
+                alert("Too short name");
+                return;
+            }
+            $("#FactoryOutput").html(Mustache.render(gFactoryTemplate, { bllName: name, varName: name[0].toLowerCase() + name.substring(1) }));
+        }
+
+    </script>
+
+    <script id="FactoryTemplate" type="x-tmpl-mustache">
+        private I{{ bllName }} _{{ varName }} = null;
+        public I{{ bllName }} {{ bllName }}
+        {
+            get
+            {
+                if (_{{ varName }} == null)
+                {
+                    _{{ varName }} = new {{ bllName }}();
+                }
+                return _{{ varName }};
+            }
+        }
+    </script>
+}
+
+
